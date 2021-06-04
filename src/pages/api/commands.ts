@@ -56,7 +56,7 @@ const handler: NextApiHandler = async (req, res) => {
           w2g_api_key: process.env.W2G_KEY,
           share,
           bg_color: '#36393f',
-          bg_opacity: '50',
+          bg_opacity: '0',
         }),
       })
       const data = await response.json()
