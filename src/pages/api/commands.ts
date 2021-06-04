@@ -38,6 +38,13 @@ const handler: NextApiHandler = async (req, res) => {
     return res.json({ type: 1 })
   } else {
     try {
+      let share = 'https://www.youtube.com/watch?v=5M_Z0ARqol8'
+      try {
+        share = req.body.data.options[0].value
+      } catch {
+        // Do nothing
+      }
+      console.info('[share]', { share })
       const response = await fetch('https://w2g.tv/rooms/create.json', {
         method: 'POST',
         headers: {
@@ -46,7 +53,7 @@ const handler: NextApiHandler = async (req, res) => {
         },
         body: JSON.stringify({
           w2g_api_key: process.env.W2G_KEY,
-          share: 'https://www.youtube.com/watch?v=5M_Z0ARqol8',
+          share,
           bg_color: '#00ff00',
           bg_opacity: '50',
         }),
