@@ -37,6 +37,7 @@ const handler: NextApiHandler = async (req, res) => {
     console.info('[response:1]', { type: 1 })
     return res.json({ type: 1 })
   } else {
+    // if data.name === 'w2g'
     try {
       let share = 'https://www.youtube.com/watch?v=5M_Z0ARqol8'
       try {
