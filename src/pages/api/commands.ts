@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch'
 
 const handler: NextApiHandler = async (req, res) => {
   const { type } = req.body
-  console.info('[received]')
+  console.info('[received]', req.method, req.body)
   if (type === 1) {
     return res.json({ type: 1 })
   } else {
