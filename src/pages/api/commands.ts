@@ -5,6 +5,7 @@ const handler: NextApiHandler = async (req, res) => {
   const { type } = req.body
   console.info('[received]', req.method, req.body)
   if (type === 1) {
+    console.info('[response:1]', { type: 1 })
     return res.json({ type: 1 })
   } else {
     try {
@@ -22,19 +23,23 @@ const handler: NextApiHandler = async (req, res) => {
         }),
       })
       const data = await response.json()
-      res.send({
+      const result = {
         type: 4,
         data: {
           contents: `https://w2g.tv/rooms/${data.streamkey}`,
         },
-      })
+      }
+      console.info('[response:2]', result)
+      res.send(result)
     } catch {
-      res.send({
+      const result = {
         type: 4,
         data: {
           contents: 'Something fucked up.',
         },
-      })
+      }
+      console.info('[response:3]', result)
+      res.send(result)
     }
   }
 }
