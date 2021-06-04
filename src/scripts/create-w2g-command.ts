@@ -10,7 +10,7 @@ const APP_ID = '850402324421279774'
       description: 'Create a Watch2Gether room',
       options: [
         {
-          name: 'Initial video',
+          name: 'initial',
           description: 'The initial video for the room.',
           type: 3,
           required: false,
@@ -19,8 +19,28 @@ const APP_ID = '850402324421279774'
     }),
     headers: {
       Authorization: `Bot ${process.env.BOT_TOKEN}`,
+      'Content-Type': 'application/json',
     },
   })
 
-  console.info(await res.json())
+  console.info('[result]', JSON.stringify(await res.json(), undefined, 2))
 })().catch((e) => console.error(e))
+
+/**
+ * Command:
+{
+  "id": "850410940565815336",
+  "application_id": "850402324421279774",
+  "name": "w2g",
+  "description": "Create a Watch2Gether room",
+  "version": "850410940565815337",
+  "default_permission": true,
+  "options": [
+    {
+      "type": 3,
+      "name": "initial",
+      "description": "The initial video for the room."
+    }
+  ]
+}
+ */
