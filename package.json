@@ -10,7 +10,7 @@
     "start": "next start",
     "prettier": "prettier --ignore-path .gitignore --write .",
     "lint": "eslint --no-error-on-unmatched-pattern -c .eslintrc.js --ext .tsx,.ts src scripts",
-    "create:w2g": "ts-node src/scripts/create-w2g-command.ts"
+    "create-cmd": "dotenv-extended src/scripts/create-command.sh"
   },
   "husky": {
     "hooks": {
@@ -40,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "autoprefixer": "^10.2.6",
+    "dotenv-extended": "^2.9.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",

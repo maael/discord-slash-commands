@@ -1,0 +1,1 @@
+ts-node $PWD/src/scripts/create-command-$1.ts
