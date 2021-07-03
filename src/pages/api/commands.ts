@@ -1,5 +1,4 @@
 import { NextApiHandler, NextApiRequest } from 'next'
-import fetch from 'isomorphic-fetch'
 import nacl from 'tweetnacl'
 import commands from '../../commands'
 
