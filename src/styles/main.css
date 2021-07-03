@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply bg-gray-800 text-white h-full transition-colors;
+  font-family: 'Open Sans', Helvetica, Arial;
+  font-display: swap;
+}
+
+#__next {
+  @apply h-full;
+}
+
+/* Utility */
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

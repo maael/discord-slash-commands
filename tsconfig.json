@@ -16,6 +16,6 @@
     "downlevelIteration": true,
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".eslintrc.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".eslintrc.js", "postcss.config.js", "tailwind.config.js"],
   "exclude": ["node_modules"]
 }

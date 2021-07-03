@@ -1,6 +1,6 @@
-const title = 'Matt Elphick | Software Engineer'
-const description = 'Software engineer mainly messing around with JavaScript.'
-const url = 'https://mael.tech/'
+const title = 'Discord Slash Commands'
+const description = 'Commands for Discord'
+const url = 'http://discord-slash-commands.vercel.app/'
 
 module.exports = {
   title,
