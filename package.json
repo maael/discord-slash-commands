@@ -10,7 +10,8 @@
     "start": "next start",
     "prettier": "prettier --ignore-path .gitignore --write .",
     "lint": "eslint --no-error-on-unmatched-pattern -c .eslintrc.js --ext .tsx,.ts src scripts",
-    "create-cmd": "dotenv-extended src/scripts/create-command.sh"
+    "create-cmd": "dotenv-extended src/scripts/create-command.sh",
+    "get-cmds": "dotenv-extended ts-node src/scripts/get-commands.ts"
   },
   "husky": {
     "hooks": {
