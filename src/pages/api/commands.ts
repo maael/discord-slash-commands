@@ -11,7 +11,7 @@ function verify(req: NextApiRequest) {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     Buffer.from(timestamp + body),
     Buffer.from(signature, 'hex'),
-    Buffer.from(process.env.CLIENT_PUBLIC_KEY!, 'hex')
+    Buffer.from(process.env.CLIENT_PUBLIC_KEY || '', 'hex')
   )
 
   return isVerified

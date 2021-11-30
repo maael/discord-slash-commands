@@ -3,6 +3,7 @@ import w2g from './w2g'
 import voicernd from './voicernd'
 
 const commands: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: { fn: (req: NextApiRequest) => Promise<any>; options?: string; description: string }
 } = {
   w2g: {
