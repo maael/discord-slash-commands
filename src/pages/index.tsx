@@ -6,7 +6,7 @@ export default function Index() {
       <div className="text-center my-5">
         <a
           className="text-4xl font-bold text-purple-400"
-          href="https://discord.com/oauth2/authorize?client_id=850402324421279774&permissions=2147519552&scope=bot"
+          href="https://discord.com/oauth2/authorize?client_id=850402324421279774&permissions=2147519552&scope=bot applications.commands"
         >
           Invite this bot ➡
         </a>

@@ -8,6 +8,8 @@ const APP_ID = '850402324421279774'
     body: JSON.stringify({
       name: 'w2g',
       description: 'Create a Watch2Gether room',
+      type: 1,
+      default_permission: true,
       options: [
         {
           name: 'initial',

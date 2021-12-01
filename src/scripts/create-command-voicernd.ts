@@ -8,6 +8,8 @@ const APP_ID = '850402324421279774'
     body: JSON.stringify({
       name: 'voicernd',
       description: 'Get a random person in a voice channel',
+      type: 1,
+      default_permission: true,
       options: [],
     }),
     headers: {
