@@ -1,6 +1,7 @@
 import { NextApiRequest } from 'next'
 import w2g from './w2g'
 import voicernd from './voicernd'
+import ffxivurl from './ffxivurl'
 
 const commands: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,6 +15,10 @@ const commands: {
   voicernd: {
     fn: voicernd,
     description: 'Get a random person in a voice channel',
+  },
+  ffxivurl: {
+    fn: ffxivurl,
+    description: 'Get the lodestone link for a user',
   },
 }
 
