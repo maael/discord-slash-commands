@@ -1,8 +1,20 @@
 import { NextApiRequest } from 'next'
 
+const defaultVideos = [
+  'https://www.youtube.com/watch?v=Xw2L11Owuhs',
+  'https://www.youtube.com/watch?v=IUhIY4GcL2w',
+  'https://www.youtube.com/watch?v=abTRxOM81Bc',
+  'https://www.youtube.com/watch?v=cEN00wMFB2A',
+  'https://www.youtube.com/watch?v=xD-IQaxHcE4',
+  'https://www.youtube.com/watch?v=hmyO0MJTjp0',
+  'https://www.youtube.com/watch?v=MJ3e9EIr3f8',
+  'https://www.youtube.com/watch?v=D-UmfqFjpl0',
+]
+
 export default async function w2gCommand(req: NextApiRequest) {
   try {
-    let share = 'https://www.youtube.com/watch?v=5M_Z0ARqol8'
+    let share =
+      defaultVideos[Math.floor(Math.random() * defaultVideos.length)] || 'https://www.youtube.com/watch?v=D-UmfqFjpl0'
     try {
       share = req.body.data.options[0].value
     } catch {
