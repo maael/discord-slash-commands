@@ -2,6 +2,7 @@ import { NextApiRequest } from 'next'
 import w2g from './w2g'
 import voicernd from './voicernd'
 import ffxivurl from './ffxivurl'
+import dalle from './dalle'
 
 const commands: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +20,11 @@ const commands: {
   ffxivurl: {
     fn: ffxivurl,
     description: 'Get the lodestone link for a user',
+  },
+  dalle: {
+    fn: dalle,
+    options: '[prompt?]',
+    description: 'Create AI generated art with prompt'
   },
 }
 
