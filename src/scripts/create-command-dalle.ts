@@ -17,6 +17,12 @@ const APP_ID = '850402324421279774'
           type: 3,
           required: true,
         },
+        {
+          name: 'hide',
+          description: 'Hide the provided prompt on response?',
+          type: 5,
+          required: false,
+        },
       ],
     }),
     headers: {
