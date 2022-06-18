@@ -24,7 +24,7 @@ const commands: {
   dalle: {
     fn: dalle,
     options: '[prompt?]',
-    description: 'Create AI generated art with prompt'
+    description: 'Create AI generated art with prompt',
   },
 }
 

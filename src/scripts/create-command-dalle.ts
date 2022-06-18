@@ -15,7 +15,7 @@ const APP_ID = '850402324421279774'
           name: 'prompt',
           description: 'The prompt.',
           type: 3,
-          required: false,
+          required: true,
         },
       ],
     }),
@@ -31,16 +31,26 @@ const APP_ID = '850402324421279774'
 /**
  * Command:
 [result] {
-  "id": "915772213523783690",
+  "id": "987798111911043083",
   "application_id": "850402324421279774",
-  "version": "915772213523783691",
+  "version": "987799040626397254",
   "default_permission": true,
   "default_member_permissions": null,
-  "type": 2,
-  "name": "ffxivurl",
+  "type": 1,
+  "name": "dalle",
   "name_localizations": null,
-  "description": "",
+  "description": "Create AI generated art with prompt",
   "description_localizations": null,
-  "dm_permission": null
+  "dm_permission": true,
+  "options": [
+    {
+      "type": 3,
+      "name": "prompt",
+      "name_localizations": null,
+      "description": "The prompt.",
+      "description_localizations": null,
+      "required": true
+    }
+  ]
 }
- */
+*/
