@@ -8,12 +8,12 @@ import FormData from 'form-data'
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
+    console.info('[raw]', req.body)
+    console.info('[dalle raw]', typeof req.body, req.body)
+    const body = req.body
+    console.info('[dalle parsed]', typeof body, body, `${process.env.DALLE_URL}/dalle`)
+    const ackUrl = `https://discord.com/api/v10/webhooks/850402324421279774/${body.token}/messages/@original`
     try {
-      console.info('[raw]', req.body)
-      console.info('[dalle raw]', typeof req.body, req.body)
-      const body = req.body
-      console.info('[dalle parsed]', typeof body, body, `${process.env.DALLE_URL}/dalle`)
-      const ackUrl = `https://discord.com/api/v10/webhooks/850402324421279774/${body.token}/messages/@original`
       const data = await fetch(`${process.env.DALLE_URL}/dalle`, {
         method: 'POST',
         body: JSON.stringify({
@@ -22,6 +22,7 @@ const handler: NextApiHandler = async (req, res) => {
         }),
       }).then((res) => res.json())
       console.info('[result]', typeof data, data.length)
+      console.info('[result:string]', JSON.stringify(data).substring(0, 200))
       if (typeof data === 'number' && data === 404) {
         console.error('dalle down')
         await fetch(ackUrl, {
@@ -36,9 +37,9 @@ const handler: NextApiHandler = async (req, res) => {
         res.status(500).json({ err: 'Dall-E service down' })
         return
       }
-      const image = `data:image/png;base64,${data[0]}`
+      const image = `data:image/png;base64,${data.generatedImgs[0]}`
       // console.info('[image]', image)
-      const imageBuf = Buffer.from(data[0], 'base64')
+      const imageBuf = Buffer.from(data.generatedImgs[0], 'base64')
       const form = new FormData()
       const filename = `${(Math.random() * 100000).toFixed(0)}.png`
       form.append('files[0]', imageBuf, filename)
@@ -82,7 +83,19 @@ const handler: NextApiHandler = async (req, res) => {
       }
     } catch (e) {
       console.error('[error]', e)
-      res.status(500).json({ error: e.message })
+      try {
+        await fetch(ackUrl, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: 'Something went wrong!',
+          }),
+        })
+      } finally {
+        res.status(500).json({ error: e.message })
+      }
     }
   } else {
     res.status(401).json({ error: 'Not implemented' })
