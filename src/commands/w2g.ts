@@ -38,7 +38,7 @@ export default async function w2gCommand(req: NextApiRequest) {
     const result = {
       type: 4,
       data: {
-        content: `https://api.w2g.tv/rooms/${data.streamkey}`,
+        content: `https://w2g.tv/rooms/${data.streamkey}`,
       },
     };
     console.info('[response:2]', result)
