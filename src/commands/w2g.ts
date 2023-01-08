@@ -21,26 +21,26 @@ export default async function w2gCommand(req: NextApiRequest) {
       // Do nothing
     }
     console.info('[share]', { share })
-    const response = await fetch('https://w2g.tv/rooms/create.json', {
-      method: 'POST',
+    const response = await fetch("https://api.w2g.tv/rooms/create.json", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         w2g_api_key: process.env.W2G_KEY,
         share,
-        bg_color: '#36393f',
-        bg_opacity: '0',
+        bg_color: "#36393f",
+        bg_opacity: "0",
       }),
-    })
+    });
     const data = await response.json()
     const result = {
       type: 4,
       data: {
-        content: `https://w2g.tv/rooms/${data.streamkey}`,
+        content: `https://api.w2g.tv/rooms/${data.streamkey}`,
       },
-    }
+    };
     console.info('[response:2]', result)
     return result
   } catch {
