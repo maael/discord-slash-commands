@@ -26,24 +26,29 @@ const handler: NextApiHandler = async (req, res) => {
   } catch {
     console.error('Error logging body')
   }
-  console.info('[received]', { method: req.method, body: bodyToLog, bodyType: typeof req.body, headers: req.headers })
+  console.info('[received]', { method: req.method, body: bodyToLog, bodyType: typeof req.body })
   const isValidRequest = verify(req)
   if (!isValidRequest) {
     console.info('[response:0]', { signature, timestamp, key: process.env.CLIENT_PUBLIC_KEY })
-    return res.status(401).end('Bad request signature')
+    res.status(401).end('Bad request signature')
+    return
   }
   const { type } = req.body
   if (type === 1) {
     console.info('[response:1]', { type: 1 })
-    return res.json({ type: 1 })
+    res.json({ type: 1 })
+    return
   } else {
     const command = commands[req.body.data.name]
     if (command) {
       console.info('[command]', req.body.data.name)
       const result = await command.fn(req)
       res.json(result)
+      return
     } else {
       console.warn('[command:missing]', req.body.data.name)
+      res.status(406)
+      return
     }
   }
 }
