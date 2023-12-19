@@ -1,6 +1,7 @@
 import { NextApiHandler, NextApiRequest } from 'next'
 import nacl from 'tweetnacl'
 import commands from '../../commands'
+import interactions from '../../interactions'
 
 function verify(req: NextApiRequest) {
   const signature = req.headers['x-signature-ed25519']?.toString() || ''
@@ -38,10 +39,22 @@ const handler: NextApiHandler = async (req, res) => {
     console.info('[response:1]', { type: 1 })
     res.json({ type: 1 })
     return
-  } else {
+  } else if (type === 3) {
+    const interactionName = req.body.data.custom_id
+    const interaction = interactions[interactionName]
+    console.info('[command][interaction]', { type, interactionName, hasAction: !!interaction })
+    if (interaction) {
+      const result = await interaction(req.body)
+      res.json(result)
+      return
+    } else {
+      console.warn('[command][interaction][missing]', interactionName)
+      res.status(406)
+    }
+  } else if (type === 2) {
     const command = commands[req.body.data.name]
     if (command) {
-      console.info('[command]', req.body.data.name)
+      console.info('[command][slash]', type, req.body.data.name)
       const result = await command.fn(req)
       res.json(result)
       return
