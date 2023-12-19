@@ -22,11 +22,11 @@ const handler: NextApiHandler = async (req, res) => {
   const timestamp = req.headers['x-signature-timestamp']?.toString()
   let bodyToLog = req.body
   try {
-    bodyToLog = JSON.stringify(req.body, undefined, 2)
+    bodyToLog = JSON.stringify(req.body)
   } catch {
     console.error('Error logging body')
   }
-  console.info('[received]', { method: req.method, body: bodyToLog, bodyType: typeof req.body })
+  console.info('[received]', { method: req.method, body: bodyToLog, type: req.body?.type, bodyType: typeof req.body })
   const isValidRequest = verify(req)
   if (!isValidRequest) {
     console.info('[response:0]', { signature, timestamp, key: process.env.CLIENT_PUBLIC_KEY })
