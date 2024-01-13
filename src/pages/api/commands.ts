@@ -30,8 +30,10 @@ const handler: NextApiHandler = async (req, res) => {
   console.info('[received]', {
     method: req.method,
     body: bodyToLog,
+    originalBody: req.body,
     type: req.body?.type,
     bodyType: typeof req.body,
+    query: req.query,
   })
   console.info('[headers]', req.headers)
   const isValidRequest = verify(req)
