@@ -6,7 +6,7 @@ import interactions from '../../interactions'
 function verify(req: NextApiRequest) {
   const signature = req.headers['x-signature-ed25519']?.toString() || ''
   const timestamp = req.headers['x-signature-timestamp']?.toString() || ''
-  const body = JSON.stringify(req.body || '{}')
+  const body = JSON.stringify(req.body || {})
 
   const isVerified = nacl.sign.detached.verify(
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
