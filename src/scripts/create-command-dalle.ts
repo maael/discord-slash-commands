@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch'
 const APP_ID = '850402324421279774'
 
 ;(async () => {
-  const res = await fetch(`https://discord.com/api/v8/applications/${APP_ID}/commands`, {
+  const res = await fetch(`https://discord.com/api/v10/applications/${APP_ID}/commands`, {
     method: 'POST',
     body: JSON.stringify({
       name: 'dalle',
