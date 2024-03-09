@@ -3,6 +3,7 @@ import w2g from './w2g'
 import voicernd from './voicernd'
 import ffxivurl from './ffxivurl'
 import dalle from './dalle'
+import stateitdle from './stateitdle'
 
 const commands: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,6 +26,11 @@ const commands: {
     fn: dalle,
     options: '[prompt?]',
     description: 'Create AI generated art with prompt',
+  },
+  stateitdle: {
+    fn: stateitdle,
+    options: '[time?]',
+    description: 'Get your stats for state-it-dle',
   },
 }
 
