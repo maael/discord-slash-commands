@@ -1,14 +1,6 @@
 import { MongoClient } from 'mongodb'
 import { format } from 'date-fns/format'
-
-interface StateItGuess {
-  day: string
-  stateId: number
-  answer: number
-  guesses: {
-    [guesser: string]: string
-  }
-}
+import { StateItGuess } from './types'
 
 export default {
   'stateit-guess': async (body) => {
