@@ -33,8 +33,10 @@ export default async function stateitdle(req: NextApiRequest) {
     try {
       client = new MongoClient(process.env.MONGODB_URI!)
       const database = client.db('discord')
+      const timeModifier = time === 'current' ? 0 : 1
+      const selectedMonth = subMonths(new Date(), timeModifier)
       const stateItGuesses = database.collection<StateItGuess>('state-it-guesses')
-      const monthDayString = format(subMonths(new Date(), 1), '/MM/yy')
+      const monthDayString = format(selectedMonth, '/MM/yy')
       const result = await stateItGuesses.find({ day: { $regex: new RegExp(`..${monthDayString}`) } }).toArray()
       const stats = result.reduce((acc, day) => {
         Object.entries(day.guesses).forEach(([user, guess]) => {
@@ -85,13 +87,18 @@ export default async function stateitdle(req: NextApiRequest) {
         ])
       )
       console.info('stats', embellishedStats[user])
+      const monthTitle = format(selectedMonth, 'LLLL')
       return {
         type: 4,
         data: {
           embeds: [
             {
-              title: 'State-it-dle Stats',
-              fields: [{ name: capitalize('exampleField'), value: 'Value', inline: true }],
+              title: `State-it-dle Stats - ${monthTitle}`,
+              fields: Object.entries(embellishedStats[user]).map(([k, v]) => ({
+                name: capitalize(k.replace(/([a-z])([A-Z])/g, (_, a, b) => `${a} ${b}`)),
+                value: `${Number(v).toFixed(2).replace('.00', '')}${k.endsWith('Rate') ? '%' : ''}`,
+                inline: true,
+              })),
             },
           ],
         },
