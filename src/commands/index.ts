@@ -6,7 +6,6 @@ import dalle from './dalle'
 import stateitdle from './stateitdle'
 
 const commands: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: { fn: (req: NextApiRequest) => Promise<any>; options?: string; description: string }
 } = {
   w2g: {
