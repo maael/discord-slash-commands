@@ -84,7 +84,7 @@ export default async function stateitdle(req: NextApiRequest) {
           { ...v, correctRate: v.guesses < 4 ? 0 : (v.correct / v.guesses) * 100 },
         ])
       )
-      console.info('stats', embellishedStats)
+      console.info('stats', embellishedStats[user])
       return {
         type: 4,
         data: {
