@@ -48,7 +48,7 @@ const handler: NextApiHandler = async (req, res) => {
     res.json({ type: 1 })
     return
   } else if (type === 3) {
-    const interactionName = req.body.data.custom_id
+    const interactionName = req.body.data.custom_id.split('--').at(0)
     const interaction = interactions[interactionName]
     console.info('[command][interaction]', { type, interactionName, hasAction: !!interaction })
     if (interaction) {

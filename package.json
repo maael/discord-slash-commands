@@ -11,7 +11,8 @@
     "prettier": "prettier --ignore-path .gitignore --write .",
     "lint": " eslint --no-error-on-unmatched-pattern --ext .ts,.tsx --ignore-path .gitignore src scripts",
     "create-cmd": "dotenv-extended src/scripts/create-command.sh",
-    "get-cmds": "dotenv-extended ts-node src/scripts/get-commands.ts"
+    "get-cmds": "dotenv-extended ts-node src/scripts/get-commands.ts",
+    "poll": "dotenv-extended ts-node src/scripts/poll.ts"
   },
   "husky": {
     "hooks": {
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "date-fns": "^3.0.0",
+    "discord.js": "^14.16.3",
     "fathom-client": "^3.0.0",
     "form-data": "^4.0.0",
     "isomorphic-fetch": "^3.0.0",

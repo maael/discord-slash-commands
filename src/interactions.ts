@@ -29,4 +29,13 @@ export default {
       },
     }
   },
+  'dnd-poll': async (body) => {
+    console.info('dnd-poll', body)
+    return {
+      type: 4,
+      data: {
+        content: 'You can make a date!',
+      },
+    }
+  },
 }
