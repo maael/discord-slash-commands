@@ -39,7 +39,9 @@ export async function handleDndPoll(body) {
     end: parse(messageDateRange.to, 'dd/MM/yy', new Date()),
   })
   const updatedDescription = `<@&1308871711885885450> click on any you can do, any days we can all do will have an event created!\n\n${chunkArray(
-    days.map((d) => `${format(d, 'EEEE dd/MM')} - ${selectedDates.some((s) => isEqual(d, s)) ? 1 : 0} / 5\n`),
+    days.map(
+      (d) => `${format(d, 'dd/MM - EEE')} - ${selectedDates.some((s) => isEqual(d, s)) ? 1 : 0}/5 - :orange_circle:\n`
+    ),
     7
   )
     .map((ar) => ar.join(''))

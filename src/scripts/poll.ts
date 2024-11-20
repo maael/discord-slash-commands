@@ -44,7 +44,7 @@ async function sendMessage() {
     .setAuthor({ name: 'Hobby Scheduler' })
     .setDescription(
       `<@&1308871711885885450> click on any you can do, any days we can all do will have an event created!\n\n${chunkArray(
-        days.map((d) => `${format(d, 'EEEE dd/MM')} - 0 / 5\n`),
+        days.map((d) => `${format(d, 'dd/MM - EEE')} - 0/5 - :orange_circle:\n`),
         7
       )
         .map((ar) => ar.join(''))
@@ -62,7 +62,7 @@ async function sendMessage() {
           placeholder: 'Select dates',
           max_values: 14,
           min_values: 0,
-          options: days.map((d) => ({ label: format(d, 'EEEE dd/MM'), value: format(d, 'yyyy-MM-dd') })),
+          options: days.map((d) => ({ label: format(d, 'dd/MM - EEEE'), value: format(d, 'yyyy-MM-dd') })),
         })
       ),
     ],
