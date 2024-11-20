@@ -35,7 +35,7 @@ async function sendMessage() {
     .setAuthor({ name: 'Hobby Scheduler' })
     .addFields(
       days
-        .map((d) => ({ name: `${format(d, 'dd/MM - EEEE')}`, value: `0/5 - :orange_circle:` }))
+        .map((d) => ({ name: `${format(d, 'dd/MM - EEEE')}`, value: `0/5 - :red_circle:` }))
         .concat([
           { name: 'Voted', value: 'No one' },
           { name: 'Waiting on', value: '<@137678852628545539>' },

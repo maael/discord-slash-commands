@@ -31,10 +31,13 @@ export async function handleDndPoll(body) {
   })
   const example = new EmbedBuilder().setTitle(messageTitle).addFields(
     days
-      .map((d) => ({
-        name: `${format(d, 'dd/MM - EEEE')}`,
-        value: `${selectedDates.some((s) => isEqual(d, s)) ? 1 : 0}/5 - :orange_circle:`,
-      }))
+      .map((d) => {
+        const voted = selectedDates.some((s) => isEqual(d, s))
+        return {
+          name: `${format(d, 'dd/MM - EEEE')}`,
+          value: `${voted ? 1 : 0}/5 - ${voted ? ':orange_circle:' : ':red_circle:'}`,
+        }
+      })
       .concat([
         { name: 'Voted', value: `<@${body.member.user.id}>` },
         { name: 'Waiting on', value: 'No one' },
