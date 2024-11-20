@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb'
 import { format } from 'date-fns/format'
 import { StateItGuess } from './types'
+import { handleDndPoll } from './interactions/dnd-poll'
 
 export default {
   'stateit-guess': async (body) => {
@@ -29,13 +30,5 @@ export default {
       },
     }
   },
-  'dnd-poll': async (body) => {
-    console.info('dnd-poll', body)
-    return {
-      type: 4,
-      data: {
-        content: 'You can make a date!',
-      },
-    }
-  },
+  'dnd-poll': handleDndPoll,
 }
