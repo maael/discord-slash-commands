@@ -21,15 +21,6 @@ import { Client, Events, GatewayIntentBits, ActionRowBuilder, EmbedBuilder, Text
   console.info('[end]')
 })().catch((e) => console.error('[error]', e))
 
-function chunkArray<T>(arr: T[], chunkSize: number) {
-  const chunks: T[][] = []
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize)
-    chunks.push(chunk)
-  }
-  return chunks
-}
-
 function getDays() {
   const current = new Date()
   return eachDayOfInterval({ start: current, end: addDays(current, 13) })
@@ -42,16 +33,13 @@ async function sendMessage() {
   const embedopen = new EmbedBuilder()
     .setTitle(`Dates for ${format(days.at(0)!, 'EEEE dd/MM/yy')} to ${format(days.at(-1)!, 'EEEE dd/MM/yy')}`)
     .setAuthor({ name: 'Hobby Scheduler' })
-    .setDescription(
-      `<@&1308871711885885450> click on any you can do, any days we can all do will have an event created!\n\n${chunkArray(
-        days.map((d) => `${format(d, 'dd/MM - EEE')} - 0/5 - :orange_circle:\n`),
-        7
-      )
-        .map((ar) => ar.join(''))
-        .join('\n')}
-
-      Voted: No one
-      Waiting on: <@137678852628545539>`
+    .addFields(
+      days
+        .map((d) => ({ name: `${format(d, 'dd/MM - EEEE')}`, value: `0/5 - :orange_circle:` }))
+        .concat([
+          { name: 'Voted', value: 'No one' },
+          { name: 'Waiting on', value: '<@137678852628545539>' },
+        ])
     )
   const _message = await channel.send({
     embeds: [embedopen],

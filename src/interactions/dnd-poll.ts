@@ -10,15 +10,6 @@ function getRangeFromTitle(title: string) {
   return { from, to }
 }
 
-function chunkArray<T>(arr: T[], chunkSize: number) {
-  const chunks: T[][] = []
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize)
-    chunks.push(chunk)
-  }
-  return chunks
-}
-
 export async function handleDndPoll(body) {
   const messageTitle = body.message.embeds.at(0).title
   const messageDateRange = getRangeFromTitle(messageTitle)
@@ -38,18 +29,17 @@ export async function handleDndPoll(body) {
     start: parse(messageDateRange.from, 'dd/MM/yy', new Date()),
     end: parse(messageDateRange.to, 'dd/MM/yy', new Date()),
   })
-  const updatedDescription = `<@&1308871711885885450> click on any you can do, any days we can all do will have an event created!\n\n${chunkArray(
-    days.map(
-      (d) => `${format(d, 'dd/MM - EEE')} - ${selectedDates.some((s) => isEqual(d, s)) ? 1 : 0}/5 - :orange_circle:\n`
-    ),
-    7
+  const example = new EmbedBuilder().setTitle(messageTitle).addFields(
+    days
+      .map((d) => ({
+        name: `${format(d, 'dd/MM - EEEE')}`,
+        value: `${selectedDates.some((s) => isEqual(d, s)) ? 1 : 0}/5 - :orange_circle:`,
+      }))
+      .concat([
+        { name: 'Voted', value: `<@${body.member.user.id}>` },
+        { name: 'Waiting on', value: 'No one' },
+      ])
   )
-    .map((ar) => ar.join(''))
-    .join('\n')}
-
-      Voted: <@${body.member.user.id}>
-      Waiting on: No one`
-  const example = new EmbedBuilder().setTitle(messageTitle).setDescription(updatedDescription)
   console.info('updating to', example.toJSON())
   return {
     type: 7,
