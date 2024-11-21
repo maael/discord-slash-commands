@@ -1,7 +1,7 @@
 import { parse, format, eachDayOfInterval, isEqual } from 'date-fns'
-import { EmbedBuilder } from 'discord.js'
 import { google } from 'googleapis'
 import { MongoClient, ReturnDocument } from 'mongodb'
+import { getDiscordEmbedFromDbResult, parseDate } from '../shared/dnd-poll-embed'
 
 function getRangeFromTitle(title: string) {
   const [from, to] = title
@@ -11,10 +11,6 @@ function getRangeFromTitle(title: string) {
     .split('-')
     .map((i) => parse(i, 'dd/MM/yy', new Date()))
   return { from, to }
-}
-
-function parseDate(str: string) {
-  return parse(str, 'yyyy-MM-dd', new Date())
 }
 
 function getDays(start, end) {
@@ -46,41 +42,7 @@ export async function handleDndPoll(body) {
       throw new Error('Missing schedule')
     }
     const voted = new Set(Object.values(result.dates).flat(1))
-    const example = new EmbedBuilder()
-      .setTitle(
-        `Dates for ${format(parseDate(result.from), 'EEEE dd/MM/yy')} to ${format(
-          parseDate(result.to),
-          'EEEE dd/MM/yy'
-        )}`
-      )
-      .setAuthor({ name: 'Hobby Scheduler' })
-      .addFields(
-        Object.entries(result.dates)
-          .map(([d, v]: any) => ({
-            name: `${format(d, 'dd/MM - EEEE')}`,
-            value: `${
-              v.length === 0
-                ? ':red_circle:'
-                : v.length === result.members.length
-                ? ':green_circle:'
-                : ':orange_circle:'
-            } - ${v.length}/${result.members.length}`,
-          }))
-          .concat([
-            {
-              name: 'Voted',
-              value: [...voted].map((m) => `<@${m}>`).join(', ') || 'No one',
-            },
-            {
-              name: 'Waiting on',
-              value:
-                result.members
-                  .filter((m) => !voted.has(m))
-                  .map((m) => `<@${m}>`)
-                  .join(', ') || 'No one',
-            },
-          ])
-      )
+    const example = getDiscordEmbedFromDbResult(result)
     console.info('updating to', example.toJSON())
     if (voted.size === result.members.length) {
       console.info('creating event')
