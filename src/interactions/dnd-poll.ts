@@ -1,5 +1,6 @@
 import { parse, format, eachDayOfInterval, isEqual } from 'date-fns'
 import { EmbedBuilder } from 'discord.js'
+import { google } from 'googleapis'
 import { MongoClient, ReturnDocument } from 'mongodb'
 
 function getRangeFromTitle(title: string) {
@@ -81,6 +82,50 @@ export async function handleDndPoll(body) {
           ])
       )
     console.info('updating to', example.toJSON())
+    if (voted.size === result.members.length) {
+      console.info('creating event')
+      try {
+        const client = new google.auth.OAuth2(
+          process.env.GOOGLE_CLIENT_ID,
+          process.env.GOOGLE_CLIENT_SECRET,
+          'http://localhost'
+        )
+        client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN })
+        const calendarClient = await google.calendar({ version: 'v3', auth: client })
+        const dndCalendarId =
+          '59e6458ee4e5125d656a4213870ef723a2a69e4b7fa14bed34cdb4039c99801e@group.calendar.google.com'
+        const event = {
+          summary: 'DnD',
+          description: 'Time to roll some dice.',
+          start: {
+            dateTime: '2024-11-22T19:00:00-00:00',
+            timeZone: 'Europe/London',
+          },
+          end: {
+            dateTime: '2024-11-22T22:00:00-00:00',
+            timeZone: 'Europe/London',
+          },
+          // TODO: Add everyone's emails
+          attendees: [{ email: 'matt.a.elphy@gmail.com' }],
+          reminders: {
+            useDefault: false,
+            overrides: [
+              { method: 'email', minutes: 24 * 60 },
+              { method: 'popup', minutes: 60 },
+            ],
+          },
+        }
+        const response = await calendarClient.events.insert({
+          calendarId: dndCalendarId,
+          resource: event,
+        } as any)
+        if (response.status !== 200) {
+          throw new Error(`Unexpected status: ${response.status}`)
+        }
+      } catch (e) {
+        console.error('Failed to create event', e)
+      }
+    }
     return {
       type: 7,
       data: {

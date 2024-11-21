@@ -12,7 +12,8 @@
     "lint": " eslint --no-error-on-unmatched-pattern --ext .ts,.tsx --ignore-path .gitignore src scripts",
     "create-cmd": "dotenv-extended src/scripts/create-command.sh",
     "get-cmds": "dotenv-extended ts-node src/scripts/get-commands.ts",
-    "poll": "dotenv-extended ts-node src/scripts/poll.ts"
+    "poll": "dotenv-extended ts-node src/scripts/poll.ts",
+    "gauth": "dotenv-extended ts-node src/scripts/google-auth.ts"
   },
   "husky": {
     "hooks": {
@@ -31,6 +32,7 @@
     "discord.js": "^14.16.3",
     "fathom-client": "^3.0.0",
     "form-data": "^4.0.0",
+    "googleapis": "^144.0.0",
     "isomorphic-fetch": "^3.0.0",
     "micro-cors": "^0.1.1",
     "mongodb": "^6.3.0",
