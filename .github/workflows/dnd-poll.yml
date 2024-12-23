@@ -55,3 +55,4 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_DND_POLL_CHANNEL: ${{ secrets.DISCORD_DND_POLL_CHANNEL }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
