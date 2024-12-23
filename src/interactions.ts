@@ -21,7 +21,7 @@ export default {
     } finally {
       if (client) await client.close()
     }
-    return {
+    const result = {
       type: 4,
       data: {
         content: `${body?.member?.user?.id ? `<@${body?.member?.user?.id}>` : 'You'} guessed <@${
@@ -29,6 +29,8 @@ export default {
         }>!`,
       },
     }
+    console.info('[interaction][stateit-guess][result]', result)
+    return result
   },
   'dnd-poll': handleDndPoll,
 }

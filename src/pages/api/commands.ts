@@ -10,9 +10,9 @@ function verify(req: NextApiRequest) {
 
   const isVerified = nacl.sign.detached.verify(
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    Buffer.from(timestamp + body),
-    Buffer.from(signature, 'hex'),
-    Buffer.from(process.env.CLIENT_PUBLIC_KEY || '', 'hex')
+    Buffer.from(timestamp + body) as any,
+    Buffer.from(signature, 'hex') as any,
+    Buffer.from(process.env.CLIENT_PUBLIC_KEY || '', 'hex') as any
   )
 
   return isVerified
@@ -35,7 +35,6 @@ const handler: NextApiHandler = async (req, res) => {
     bodyType: typeof req.body,
     query: req.query,
   })
-  console.info('[headers]', req.headers)
   const isValidRequest = verify(req)
   if (!isValidRequest) {
     console.info('[response:0][invalid]', { signature, timestamp, key: process.env.CLIENT_PUBLIC_KEY })
