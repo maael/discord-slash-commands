@@ -31,6 +31,10 @@ export async function handleDndPoll(body) {
       messageDateRange,
       messageDescription,
       values: body.data.values,
+      api: {
+        id: body.id,
+        token: body.token,
+      },
     })
     const result = await updateAndGetScheduling(
       messageDateRange.from,
