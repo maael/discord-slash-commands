@@ -1,16 +1,19 @@
 import { NextApiRequest } from 'next'
-import { InteractionResponseType } from 'discord-api-types/v10'
+import { APIInteractionResponse, InteractionResponseType } from 'discord-api-types/v10'
 
-const wait = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+// const wait = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export default async function async(req: NextApiRequest) {
-  void sendDeferredMessage(req.body)
+export default async function async(_req: NextApiRequest): Promise<APIInteractionResponse> {
+  // void sendDeferredMessage(req.body)
   return {
-    type: InteractionResponseType.DeferredChannelMessageWithSource,
+    type: InteractionResponseType.ChannelMessageWithSource,
+    data: {
+      content: 'Testing async',
+    },
   }
 }
 
-async function sendDeferredMessage(_body: any) {
-  await wait(2_000)
-  console.info('sending deferred')
-}
+// async function sendDeferredMessage(_body: any) {
+//   await wait(2_000)
+//   console.info('sending deferred')
+// }

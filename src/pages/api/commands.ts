@@ -62,7 +62,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (command) {
       console.info('[command][slash][start]', type, req.body.data.name)
       const result = await command.fn(req)
-      console.info('[command][slash][end]', type, req.body.data.name)
+      console.info('[command][slash][end]', type, req.body.data.name, { result })
       res.json(result)
       return
     } else {
