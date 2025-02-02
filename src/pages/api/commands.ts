@@ -66,7 +66,7 @@ const handler: NextApiHandler = async (req, res) => {
       res.json(result)
       return
     } else {
-      console.warn('[command:missing]', req.body.data.name)
+      console.warn('[command:missing]', req.body.data.name, 'not in', Object.keys(commands))
       res.status(406)
       return
     }

@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "date-fns": "^3.0.0",
-    "discord.js": "^14.16.3",
+    "discord-api-types": "^0.37.119",
+    "discord.js": "^14.17.3",
     "fathom-client": "^3.0.0",
     "form-data": "^4.0.0",
     "googleapis": "^144.0.0",
