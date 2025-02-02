@@ -30,7 +30,6 @@ const handler: NextApiHandler = async (req, res) => {
   console.info('[received]', {
     method: req.method,
     body: bodyToLog,
-    originalBody: req.body,
     type: req.body?.type,
     bodyType: typeof req.body,
     query: req.query,
@@ -61,8 +60,9 @@ const handler: NextApiHandler = async (req, res) => {
   } else if (type === 2) {
     const command = commands[req.body.data.name]
     if (command) {
-      console.info('[command][slash]', type, req.body.data.name)
+      console.info('[command][slash][start]', type, req.body.data.name)
       const result = await command.fn(req)
+      console.info('[command][slash][end]', type, req.body.data.name)
       res.json(result)
       return
     } else {
