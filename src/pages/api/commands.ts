@@ -19,6 +19,7 @@ function verify(req: NextApiRequest) {
 }
 
 const handler: NextApiHandler = async (req, res) => {
+  console.info('[start]')
   const signature = req.headers['x-signature-ed25519']?.toString()
   const timestamp = req.headers['x-signature-timestamp']?.toString()
   let bodyToLog = req.body
