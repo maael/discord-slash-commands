@@ -1,9 +1,9 @@
 import { NextApiRequest } from 'next'
-import { APIInteractionResponse } from 'discord-api-types/v10'
+// import { APIInteractionResponse } from 'discord-api-types/v10'
 
 // const wait = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export default async function asyncCommand(_req: NextApiRequest): Promise<APIInteractionResponse> {
+export default async function asyncCommand(_req: NextApiRequest): Promise<any> {
   // void sendDeferredMessage(req.body)
   console.info('[async] Running')
   return {
