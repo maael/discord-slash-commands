@@ -41,35 +41,40 @@ const handler: NextApiHandler = async (req, res) => {
     return
   }
   const { type } = req.body
-  if (type === 1) {
-    console.info('[response:1]', { type: 1 })
-    res.json({ type: 1 })
-    return
-  } else if (type === 3) {
-    const interactionName = req.body.data.custom_id.split('--').at(0)
-    const interaction = interactions[interactionName]
-    console.info('[command][interaction]', { type, interactionName, hasAction: !!interaction })
-    if (interaction) {
-      const result = await interaction(req.body)
-      res.json(result)
+  try {
+    if (type === 1) {
+      console.info('[response:1]', { type: 1 })
+      res.json({ type: 1 })
       return
-    } else {
-      console.warn('[command][interaction][missing]', interactionName)
-      res.status(406)
+    } else if (type === 3) {
+      const interactionName = req.body.data.custom_id.split('--').at(0)
+      const interaction = interactions[interactionName]
+      console.info('[command][interaction]', { type, interactionName, hasAction: !!interaction })
+      if (interaction) {
+        const result = await interaction(req.body)
+        res.json(result)
+        return
+      } else {
+        console.warn('[command][interaction][missing]', interactionName)
+        res.status(406)
+      }
+    } else if (type === 2) {
+      const command = commands[req.body.data.name]
+      if (command) {
+        console.info('[command][slash][start]', type, req.body.data.name)
+        const result = await command.fn(req)
+        console.info('[command][slash][end]', type, req.body.data.name, { result })
+        res.json(result)
+        return
+      } else {
+        console.warn('[command:missing]', req.body.data.name, 'not in', Object.keys(commands))
+        res.status(406)
+        return
+      }
     }
-  } else if (type === 2) {
-    const command = commands[req.body.data.name]
-    if (command) {
-      console.info('[command][slash][start]', type, req.body.data.name)
-      const result = await command.fn(req)
-      console.info('[command][slash][end]', type, req.body.data.name, { result })
-      res.json(result)
-      return
-    } else {
-      console.warn('[command:missing]', req.body.data.name, 'not in', Object.keys(commands))
-      res.status(406)
-      return
-    }
+  } catch (e) {
+    console.error('[command][error]', e)
+    res.json({ type: 4, data: { content: 'Something went wrong, please try again' } })
   }
 }
 

@@ -4,7 +4,7 @@ import voicernd from './voicernd'
 import ffxivurl from './ffxivurl'
 import dalle from './dalle'
 import stateitdle from './stateitdle'
-import async from './async'
+import asyncCommand from './async'
 
 const commands: {
   [k: string]: { fn: (req: NextApiRequest) => Promise<any>; options?: string; description: string }
@@ -33,7 +33,7 @@ const commands: {
     description: 'Get your stats for state-it-dle',
   },
   async: {
-    fn: async,
+    fn: asyncCommand,
     description: 'Testing async deferred responses',
   },
 }
